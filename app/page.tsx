@@ -2,8 +2,6 @@ import Navigation from "../components/navigation";
 import Footer from "../components/footer";
 import Hero from "../components/hero";
 import Profile from "../components/profile";
-import Platform from "../components/platform";
-import OurApps from "../components/ourapps";
 import { getData, getDomain, getTopsites, getScript } from "../lib/data";
 import HeaderWidget from "@/components/HeaderWidget"
 

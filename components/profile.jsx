@@ -1,47 +1,36 @@
+"use client";
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import LoadingState from './LoadingState';
+import Link from 'next/link'
 
-const profilesData = [
-  {
-    id: 1,
-    name: "Joe Thomas",
-    address: "Boca Raton, Florida",
-    intro: "Happy is the new rich.",
-    image: "https://cdn-icons-png.flaticon.com/512/3177/3177440.png",
-    cover_image: "https://images.pexels.com/photos/4401807/pexels-photo-4401807.jpeg",
-    sports_field: "Boxing",
-  },
-  {
-    id: 2,
-    name: "Bryan Walker",
-    address: "Boca Raton, Florida",
-    intro: "Create impact with every strategy.",
-    image: "https://cdn-icons-png.flaticon.com/512/3177/3177440.png",
-    cover_image: "https://images.pexels.com/photos/8464557/pexels-photo-8464557.jpeg",    
-    sports_field: "Cycling",
-  },
-  {
-    id: 3,
-    name: "Adam Scott",
-    address: "Boca Raton, Florida",
-    intro: "Build with passion, design with purpose.",
-    image: "https://cdn-icons-png.flaticon.com/512/3177/3177440.png",
-    cover_image: "https://images.pexels.com/photos/7188066/pexels-photo-7188066.jpeg",
-    sports_field: "Football",
-  },
-  {
-    id: 4,
-    name: "Anna Williams",
-    address: "Boca Raton, Florida",
-    intro: "Craft experiences that matter.",
-    image: "https://cdn-icons-png.flaticon.com/512/3177/3177440.png",
-    cover_image: "https://images.pexels.com/photos/1199590/pexels-photo-1199590.jpeg",
-    sports_field: "Tennis",
-  },
-];
 
 
 
 export default function Profile() {
+  const [profileData, setprofileData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/profiles", { next: { revalidate: 6000} });
+        if (response.ok) {
+          const res = await response.json();
+          setprofileData(res.profiles);
+          setIsLoading(false);
+        } else {
+          alert('An error occurred');
+        }
+      } catch (error) {
+        console.error('Error fetching blogs:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <section className="profile-section">
       <div className="container">
@@ -54,21 +43,28 @@ export default function Profile() {
 
           </div>
 
-          {profilesData.map(profile => (
+          {isLoading ? (
+        <LoadingState />
+      ) : (
+        <>
+
+          {profileData.map(profile => (
             <div key={profile.id} className="col-md-3 mb-4">
               <ProfileCard {...profile} />
             </div>
           ))}
+           </>
+      )}
         </div>
         <div className="row">
-            <div className='col text-center'><button className="profile-btn">View More</button></div>
+        <div className='col text-center'> <Link href="https://www.profilesuite.com/discover" target='_blank'><button className="profile-btn">View More</button></Link></div>
         </div>
       </div>
     </section>
   );
 }
 
-function ProfileCard({ name, address, intro, image, cover_image, sports_field }) {
+function ProfileCard({ name, location, intro, image, skills }) {
   return (
     <div className="profile-card d-flex flex-column">
       <div className='d-flex'>
@@ -83,15 +79,15 @@ function ProfileCard({ name, address, intro, image, cover_image, sports_field })
       </div>
       <div className='cover-image'>
         <Image
-          src={cover_image}
+          src={image}
           alt={`${name}'s Cover`}
           layout="fill"
           objectFit="cover"
           className='img-responsive'
         />
       </div>
-      <div className="profile-address small">{address}</div>
-      <div className="sports-field"><i>{sports_field}</i></div>
+      <div className="profile-address small">{location}</div>
+      <div className="sports-field"><i>{skills}</i></div>
       <p className="profile-intro">{intro}</p>      
     </div>
   );

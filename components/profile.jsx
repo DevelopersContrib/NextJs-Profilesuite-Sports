@@ -8,6 +8,7 @@ const profilesData = [
     intro: "Happy is the new rich.",
     image: "https://cdn-icons-png.flaticon.com/512/3177/3177440.png",
     cover_image: "https://images.pexels.com/photos/4401807/pexels-photo-4401807.jpeg",
+    sports_field: "Boxing",
   },
   {
     id: 2,
@@ -16,6 +17,7 @@ const profilesData = [
     intro: "Create impact with every strategy.",
     image: "https://cdn-icons-png.flaticon.com/512/3177/3177440.png",
     cover_image: "https://images.pexels.com/photos/8464557/pexels-photo-8464557.jpeg",    
+    sports_field: "Cycling",
   },
   {
     id: 3,
@@ -24,6 +26,7 @@ const profilesData = [
     intro: "Build with passion, design with purpose.",
     image: "https://cdn-icons-png.flaticon.com/512/3177/3177440.png",
     cover_image: "https://images.pexels.com/photos/7188066/pexels-photo-7188066.jpeg",
+    sports_field: "Football",
   },
   {
     id: 4,
@@ -32,7 +35,8 @@ const profilesData = [
     intro: "Craft experiences that matter.",
     image: "https://cdn-icons-png.flaticon.com/512/3177/3177440.png",
     cover_image: "https://images.pexels.com/photos/1199590/pexels-photo-1199590.jpeg",
-  }
+    sports_field: "Tennis",
+  },
 ];
 
 
@@ -51,7 +55,7 @@ export default function Profile() {
           </div>
 
           {profilesData.map(profile => (
-            <div key={profile.id} className="col-md-3">
+            <div key={profile.id} className="col-md-3 mb-4">
               <ProfileCard {...profile} />
             </div>
           ))}
@@ -64,7 +68,7 @@ export default function Profile() {
   );
 }
 
-function ProfileCard({ name, address, intro, image, cover_image }) {
+function ProfileCard({ name, address, intro, image, cover_image, sports_field }) {
   return (
     <div className="profile-card d-flex flex-column">
       <div className='d-flex'>
@@ -87,6 +91,7 @@ function ProfileCard({ name, address, intro, image, cover_image }) {
         />
       </div>
       <div className="profile-address small">{address}</div>
+      <div className="sports-field"><i>{sports_field}</i></div>
       <p className="profile-intro">{intro}</p>      
     </div>
   );

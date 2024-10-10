@@ -5,7 +5,7 @@ import Image from 'next/image';
 import styles from './Hero.module.css';
 import Link from 'next/link'
 
-export default function Hero() {  
+export default function Hero({domain}) {  
   return (
     <section className="hero-section">
       <div className="container">
@@ -15,7 +15,7 @@ export default function Hero() {
             <p className="hero-description">
             The ultimate digital platform for athletes to showcase their sports journey 
             </p>
-            <Link href="https://www.profilesuite.com/signup" target="_blank"><button className="hero-signup-btn">Sign Up Now</button></Link>
+            <Link href={`https://www.profilesuite.com/signup?domain=${domain}`} target="_blank"><button className="hero-signup-btn">Sign Up Now</button></Link>
           </div>
         </div>
       </div>

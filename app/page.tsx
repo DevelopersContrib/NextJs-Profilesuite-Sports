@@ -30,7 +30,7 @@ export default async function Home() {
      
      <Navigation domain={domain} logo={c.data.logo}/>
     
-      <Hero />
+     <Hero domain={domain}/>
       <Profile />
       <Footer
         domain={domain}
